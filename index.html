@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pixel Art Transitions Lab</title>
+  <meta name="description" content="8 pixel-art screen transitions (fade, stepped, Bayer dither, pixelate, iris, diagonal wipe, diamonds, shutters) on a 320×180 canvas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Pixel Art Transitions Lab</h1>
+    <p class="sub">ピクセルアートの画面遷移 8 種 — 320×180 / 32色パレット / 60tick固定</p>
+  </header>
+
+  <main>
+    <section id="stage">
+      <canvas id="screen" aria-label="game screen"></canvas>
+      <div class="hint">
+        <span>←→↑↓ / WASD 移動・画面端で次の部屋へ</span>
+        <span>クリック/タップ 移動</span>
+        <span>Space 次の部屋</span>
+        <span>1–8 スタイル切替</span>
+        <span>表示倍率 <b id="scale"></b></span>
+      </div>
+      <div id="timeline" class="timeline" title="84 tick timeline"></div>
+    </section>
+
+    <aside id="panel">
+      <div class="card">
+        <h2>スタイル <small>Style</small></h2>
+        <div id="styles" class="styles"></div>
+        <p class="style-name" id="style-name"></p>
+        <p class="style-desc" id="style-desc"></p>
+      </div>
+
+      <div class="card">
+        <h2>操作 <small>Controls</small></h2>
+        <div class="row">
+          <button id="prev" class="big">◀ 前の部屋</button>
+          <button id="next" class="big primary">次の部屋 ▶</button>
+        </div>
+        <label><input type="checkbox" id="auto"> オートデモ（勇者が自動で歩く）</label>
+        <label><input type="checkbox" id="cycle"> 遷移ごとにスタイルを切替</label>
+        <label class="inline">速度
+          <select id="speed">
+            <option value="1">1×</option>
+            <option value="0.5">0.5×</option>
+            <option value="0.25">0.25×</option>
+            <option value="0.1">0.1×</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="card">
+        <h2>手動検査 <small>Inspect</small></h2>
+        <label><input type="checkbox" id="manual"> progress を手動で固定</label>
+        <div class="manual-only">
+          <input type="range" id="progress" min="0" max="1" step="0.001" value="0.5">
+          <div class="row between"><span>progress <b id="progress-val">0.500</b></span>
+            <label><input type="checkbox" id="reverse"> reverse</label></div>
+          <p class="note">アイリス中心はキャンバスのクリック位置に移動します。</p>
+        </div>
+      </div>
+
+      <div class="card stats">
+        <h2>状態 <small>State</small></h2>
+        <dl>
+          <dt>phase</dt><dd id="st-phase"></dd>
+          <dt>tick</dt><dd id="st-tick"></dd>
+          <dt>progress</dt><dd id="st-progress"></dd>
+          <dt>reverse</dt><dd id="st-reverse"></dd>
+          <dt>paused</dt><dd id="st-paused"></dd>
+          <dt>パレット外の色（この遷移累計）</dt><dd id="st-new"></dd>
+          <dt>パレット外の色（現フレーム）</dt><dd id="st-frame"></dd>
+          <dt>初移動 tick（85 が正解）</dt><dd id="st-move"></dd>
+        </dl>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    Based on the techniques in
+    <a href="https://www.spritecook.ai/blog/pixel-art-screen-transitions" target="_blank" rel="noopener">“Pixel Art Screen Transitions” (SpriteCook blog)</a>.
+    All art is drawn procedurally in code. ·
+    <a href="https://github.com/kumi0708/pixel-art-transitions-lab">GitHub</a>
+  </footer>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
